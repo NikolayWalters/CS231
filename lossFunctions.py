@@ -1,12 +1,6 @@
-def quicksort(arr):
-    if len(arr) <= 1: # termination condition
-        return arr
-    pivot = arr[len(arr) // 2] # determines pivot value in the array
+# L1 distance (sum of absolute value differences)
+distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
 
-    # sub array comparisons with the pivot
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-
-    # keep calling the function untill fully sorted
-    return quicksort(left) + middle + quicksort(right)
+# Euclidian / L2
+distances = np.sqrt(np.sum(np.square(self.Xtr - X[i,:]), axis = 1))
+# L2 distance prefers many medium disagreements to one big one
