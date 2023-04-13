@@ -10,6 +10,8 @@ y = np.zeros(N*K, dtype='uint8') # class labels
 for j in range(K):
 	ix = range(N*j,N*(j+1))
 	r = np.linspace(0.0,1,N) # radius
+	
+	# first part controls 'curliness' + random noise
 	t = np.linspace(j*4,(j+1)*4,N) + np.random.randn(N)*0.2 # theta
 	X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
 	y[ix] = j
