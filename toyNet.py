@@ -72,7 +72,7 @@ def softmax_classifier(D, K, X, y):
 
 #softmax_classifier(D, K, X, y)
 
-def with_hidden_layer(D, K, X, y):
+def two_layer_net(D, K, X, y):
 	# adding a hidden layer to the above classifier:
 
 	# initialize parameters randomly
@@ -139,4 +139,4 @@ def with_hidden_layer(D, K, X, y):
 	predicted_class = np.argmax(scores, axis=1)
 	print('training accuracy: %.2f' % (np.mean(predicted_class == y)))
 
-with_hidden_layer(D, K, X, y)
+two_layer_net(D, K, X, y)
