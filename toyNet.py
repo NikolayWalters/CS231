@@ -20,7 +20,7 @@ for j in range(K):
 #plt.show()
 
 
-def softmax_classifier(D, K, X, y):
+def softmax_classifier(D, K, X, y, plot = True):
 	# softmax linear classifier
 	# initialize parameters randomly
 	W = 0.01 * np.random.randn(D,K)
@@ -68,11 +68,25 @@ def softmax_classifier(D, K, X, y):
 	scores = np.dot(X, W) + b
 	predicted_class = np.argmax(scores, axis=1)
 	print('training accuracy: %.2f' % (np.mean(predicted_class == y)))
+	if plot:
+		h = 0.02
+		x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+		y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+		xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+		Z = np.dot(np.c_[xx.ravel(), yy.ravel()], W) + b
+		Z = np.argmax(Z, axis=1)
+		Z = Z.reshape(xx.shape)
+		fig = plt.figure()
+		plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral, alpha=0.8)
+		plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
+		plt.xlim(xx.min(), xx.max())
+		plt.ylim(yy.min(), yy.max())
+		plt.show()
 
 
 #softmax_classifier(D, K, X, y)
 
-def two_layer_net(D, K, X, y):
+def two_layer_net(D, K, X, y, plot = True):
 	# adding a hidden layer to the above classifier:
 
 	# initialize parameters randomly
@@ -138,5 +152,20 @@ def two_layer_net(D, K, X, y):
 	scores = np.dot(hidden_layer, W2) + b2
 	predicted_class = np.argmax(scores, axis=1)
 	print('training accuracy: %.2f' % (np.mean(predicted_class == y)))
+
+	if plot:
+		h = 0.02
+		x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+		y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+		xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+		Z = np.dot(np.maximum(0, np.dot(np.c_[xx.ravel(), yy.ravel()], W) + b), W2) + b2
+		Z = np.argmax(Z, axis=1)
+		Z = Z.reshape(xx.shape)
+		fig = plt.figure()
+		plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral, alpha=0.8)
+		plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
+		plt.xlim(xx.min(), xx.max())
+		plt.ylim(yy.min(), yy.max())
+		plt.show()
 
 two_layer_net(D, K, X, y)
